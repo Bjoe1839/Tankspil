@@ -23,9 +23,6 @@ void setup() {
 void draw() {
   background(255);
   movePlayers();
-
-  p1.display();
-  p2.display();
   
   //spiller lyd hvis en af tankene kører frem eller tilbage 
   if (p1U || p1D || p2U || p2D || p1R || p1L || p2R || p2L) {
@@ -37,6 +34,9 @@ void draw() {
     driving.stop();
     played = false;
   }
+  
+  p1.display();
+  p2.display();
 }
 
 void movePlayers() {
