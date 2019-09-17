@@ -12,7 +12,7 @@ class Player {
   
   void move(int f) {
     velocity = new PVector(cos(radians(angle+90)), sin(radians(angle+90)));
-    velocity.mult(f);
+    velocity.mult(f*5);
     location.add(velocity);
   }
   
