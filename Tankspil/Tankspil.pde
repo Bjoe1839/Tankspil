@@ -22,9 +22,9 @@ void draw() {
 void movePlayers() {
   if (p1L) p1.angle--;
   if (p1R) p1.angle++;
-  if (p1U) {
-    
-  }
+  if (p1U) p1.move(1);
+  if (p1D) p1.move(-1);
+  
   
   
   if (p2L) p2.angle--;

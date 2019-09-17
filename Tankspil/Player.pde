@@ -10,8 +10,10 @@ class Player {
     img = image;
   }
   
-  void move() {
-    
+  void move(int f) {
+    velocity = new PVector(cos(radians(angle+90)), sin(radians(angle+90)));
+    velocity.mult(f);
+    location.add(velocity);
   }
   
   void display() {
