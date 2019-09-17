@@ -91,10 +91,10 @@ void keyPressed() {
     break;
 
   case ' ':
-    bullets.add(new Bullet(p1.location, p1.angle, 10, 100));
+    bullets.add(new Bullet(p1.location, p1.angle, 20, 100));
     break;
   case ENTER:
-    bullets.add(new Bullet(p2.location, p2.angle, 10, 100));
+    bullets.add(new Bullet(p2.location, p2.angle, 20, 100));
     break;
   }
 }
