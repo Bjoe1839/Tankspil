@@ -1,12 +1,20 @@
+import processing.sound.*;
+SoundFile driving;
+
 Player p1, p2;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
 
+boolean played;
+
 void setup() {
   fullScreen();
   noCursor();
   imageMode(CENTER);
+  fill(0);
+
+  driving = new SoundFile(this, "Tank_Driving.mp3");
 
   p1 = new Player(new PVector(width/4, height/2), loadImage("Blåtank.png"));
   p2 = new Player(new PVector(width*3/4, height/2), loadImage("Rødtank.png"));
@@ -18,6 +26,17 @@ void draw() {
 
   p1.display();
   p2.display();
+  
+  //spiller lyd hvis en af tankene kører frem eller tilbage 
+  if (p1U || p1D || p2U || p2D || p1R || p1L || p2R || p2L) {
+    if (!played) {
+      driving.loop();
+      played = true;
+    }
+  } else {
+    driving.stop();
+    played = false;
+  }
 }
 
 void movePlayers() {
@@ -25,9 +44,8 @@ void movePlayers() {
   if (p1R) p1.angle += 3;
   if (p1U) p1.move(1);
   if (p1D) p1.move(-1);
-  
-  
-  
+
+
   if (p2L) p2.angle -= 3;
   if (p2R) p2.angle += 3;
   if (p2U) p2.move(1);
@@ -66,7 +84,7 @@ void keyPressed() {
     break;
   case DOWN:
     p2D = true;
-  break;
+    break;
   }
 }
 
@@ -103,6 +121,6 @@ void keyReleased() {
     break;
   case DOWN:
     p2D = false;
-  break;
+    break;
   }
 }
