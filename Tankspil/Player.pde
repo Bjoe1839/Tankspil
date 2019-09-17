@@ -15,10 +15,10 @@ class Player {
     velocity.mult(f*7);
     location.add(velocity);
 
-    if (location.x +65 > width) location.sub(velocity);
-    if (location.x -65 < 0) location.sub(velocity);
-    if (location.y +65 > height) location.sub(velocity);
-    if (location.y -65 < 0) location.sub(velocity);
+    if (location.x + 65 > width) location.sub(velocity);
+    if (location.x - 65 < 0) location.sub(velocity);
+    if (location.y + 65 > height) location.sub(velocity);
+    if (location.y - 65 < 0) location.sub(velocity);
   }
 
   void display() {

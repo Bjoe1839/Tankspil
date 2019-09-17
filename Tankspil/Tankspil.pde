@@ -2,6 +2,7 @@ import processing.sound.*;
 SoundFile driving;
 
 Player p1, p2;
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
@@ -22,8 +23,17 @@ void setup() {
 
 void draw() {
   background(255);
+
+  for (int i = bullets.size()-1; i >= 0; i--) {
+    bullets.get(i).move();
+    
+    if (bullets.get(i).lifespan > 0) bullets.get(i).display();
+    else bullets.remove(this);
+  }
+
+
   movePlayers();
-  
+
   //spiller lyd hvis en af tankene kører frem eller tilbage 
   if (p1U || p1D || p2U || p2D || p1R || p1L || p2R || p2L) {
     if (!played) {
@@ -34,7 +44,7 @@ void draw() {
     driving.stop();
     played = false;
   }
-  
+
   p1.display();
   p2.display();
 }
@@ -54,25 +64,19 @@ void movePlayers() {
 
 
 void keyPressed() {
-  switch(key) {
-  case 'a':
+  switch(keyCode) {
   case 'A':
     p1L = true;
     break;
-  case 'd':
   case 'D':
     p1R = true;
     break;
-  case 'w':
   case 'W':
     p1U = true;
     break;
-  case 's':
   case 'S':
     p1D = true;
     break;
-  }
-  switch(keyCode) {
   case LEFT:
     p2L = true;
     break;
@@ -85,31 +89,32 @@ void keyPressed() {
   case DOWN:
     p2D = true;
     break;
+
+  case ' ':
+    bullets.add(new Bullet(p1.location, p1.angle, 10, 100));
+    break;
+  case ENTER:
+    bullets.add(new Bullet(p2.location, p2.angle, 10, 100));
+    break;
   }
 }
 
 
 
 void keyReleased() {
-  switch(key) {
-  case 'a':
+  switch(keyCode) {
   case 'A':
     p1L = false;
     break;
-  case 'd':
   case 'D':
     p1R = false;
     break;
-  case 'w':
   case 'W':
     p1U = false;
     break;
-  case 's':
   case 'S':
     p1D = false;
     break;
-  }
-  switch(keyCode) {
   case LEFT:
     p2L = false;
     break;
