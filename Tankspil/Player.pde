@@ -3,6 +3,7 @@ class Player {
   PImage img;
   
   PVector location, velocity;
+  int angle;
   
   Player(PVector loc, PImage image) {
     location = loc;
@@ -16,7 +17,7 @@ class Player {
   void display() {
     pushMatrix();
     translate(location.x, location.y);
-    //rotate();
+    rotate(angle);
     image(img, 0, 0, 100, 100);
     popMatrix();
   }

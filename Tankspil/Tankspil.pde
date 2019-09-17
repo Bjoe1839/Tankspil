@@ -13,3 +13,21 @@ void draw() {
   p1.display();
   p2.display();
 }
+
+
+
+void keyPressed() {
+  switch(key) {
+    case 'a':
+    case 'A':
+    println("TEST");
+    break;
+    
+    
+    
+    
+    
+    
+  }
+  
+}
