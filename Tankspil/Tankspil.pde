@@ -40,14 +40,14 @@ void draw() {
 }
 
 void movePlayers() {
-  if (p1L) p1.angle -= 3;
-  if (p1R) p1.angle += 3;
+  if (p1L) p1.angle -= 4;
+  if (p1R) p1.angle += 4;
   if (p1U) p1.move(1);
   if (p1D) p1.move(-1);
 
 
-  if (p2L) p2.angle -= 3;
-  if (p2R) p2.angle += 3;
+  if (p2L) p2.angle -= 4;
+  if (p2R) p2.angle += 4;
   if (p2U) p2.move(1);
   if (p2D) p2.move(-1);
 }

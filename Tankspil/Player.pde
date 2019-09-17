@@ -12,11 +12,13 @@ class Player {
 
   void move(int f) {
     velocity = new PVector(cos(radians(angle+90)), sin(radians(angle+90)));
-    velocity.mult(f*5);
+    velocity.mult(f*7);
     location.add(velocity);
-    
-    if (location.x > width || location.x < 0) location.sub(velocity);
-    if (location.y > height || location.y < 0) location.sub(velocity);
+
+    if (location.x +65 > width) location.sub(velocity);
+    if (location.x -65 < 0) location.sub(velocity);
+    if (location.y +65 > height) location.sub(velocity);
+    if (location.y -65 < 0) location.sub(velocity);
   }
 
   void display() {
