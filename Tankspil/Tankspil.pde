@@ -20,12 +20,17 @@ void draw() {
 }
 
 void movePlayers() {
-  if (p1L) {
-    p1.angle--;
+  if (p1L) p1.angle--;
+  if (p1R) p1.angle++;
+  if (p1U) {
+    
   }
-  if (p2L) {
-    p2.angle--;
-  }
+  
+  
+  if (p2L) p2.angle--;
+  if (p2R) p2.angle++;
+  if (p2U) ;
+  if (p2D) ;
 }
 
 
@@ -35,10 +40,21 @@ void keyPressed() {
   case 'A':
     p1L = true;
     break;
+  case 'd':
+  case 'D':
+    p1R = true;
+    break;
+  case 'w':
+  case 'W':
+    p1U = true;
+    break;
   }
   switch(keyCode) {
   case LEFT:
     p2L = true;
+    break;
+  case RIGHT:
+    p2R = true;
     break;
   }
 }
@@ -50,6 +66,18 @@ void keyReleased() {
   case 'a':
   case 'A':
     p1L = false;
+    break;
+  case 'd':
+  case 'D':
+    p1R = false;
+    break;
+  }
+  switch(keyCode) {
+  case LEFT:
+    p2L = false;
+    break;
+  case RIGHT:
+    p2R = false;
     break;
   }
 }
