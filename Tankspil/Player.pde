@@ -17,7 +17,7 @@ class Player {
   void display() {
     pushMatrix();
     translate(location.x, location.y);
-    rotate(angle);
+    rotate(radians(angle));
     image(img, 0, 0, 100, 100);
     popMatrix();
   }
