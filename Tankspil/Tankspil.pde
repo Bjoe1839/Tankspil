@@ -31,9 +31,9 @@ void setup() {
   tImg = loadImage("Turret.gif");
   gameOver = loadImage("Game Over.png");
 
-  driving = new SoundFile(this, "Tank_Driving.mp3");
-  pewpew = new SoundFile(this, "Pew Pew.mp3"); 
-  oof = new SoundFile(this, "deathsound.mp3");
+  driving = new SoundFile(this, "Tank_Driving.wav");
+  pewpew = new SoundFile(this, "Pew Pew.wav"); 
+  oof = new SoundFile(this, "deathsound.wav");
 
   p1 = new Player(new PVector(width/4, height/2), loadImage("Blåtank.png"));
   p2 = new Player(new PVector(width*3/4, height/2), loadImage("Rødtank.png"));
