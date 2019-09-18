@@ -27,6 +27,7 @@ class Player {
         if (dist(bullets.get(i).location.x, bullets.get(i).location.y, location.x, location.y) < 58) {
           bullets.remove(bullets.get(i));
           score -= 3;
+          oof.play();
         }
       }
     }

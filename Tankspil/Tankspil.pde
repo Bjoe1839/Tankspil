@@ -1,5 +1,7 @@
 import processing.sound.*;
 SoundFile driving;
+SoundFile pewpew;
+SoundFile oof;
 
 Player p1, p2;
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -30,6 +32,8 @@ void setup() {
   gameOver = loadImage("Game Over.png");
 
   driving = new SoundFile(this, "Tank_Driving.mp3");
+  pewpew = new SoundFile(this, "Pew Pew.mp3"); 
+  oof = new SoundFile(this, "oof.mp3");
 
   p1 = new Player(new PVector(width/4, height/2), loadImage("Blåtank.png"));
   p2 = new Player(new PVector(width*3/4, height/2), loadImage("Rødtank.png"));
@@ -128,9 +132,11 @@ void keyPressed() {
 
   case ' ':
     bullets.add(new Bullet(p1.location, p1.angle, 20, 100));
+    pewpew.play();
     break;
   case ENTER:
     bullets.add(new Bullet(p2.location, p2.angle, 20, 100));
+    pewpew.play();
     break;
   }
 }
