@@ -6,6 +6,7 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Turret> turrets = new ArrayList<Turret>();
 
 PImage tImg;
+PImage gameOver;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
@@ -26,6 +27,7 @@ void setup() {
   font = loadFont("Digitaltech-rm0K.vlw");
   textFont(font, 45);
   tImg = loadImage("Turret.gif");
+  gameOver = loadImage("Game Over.png");
 
   driving = new SoundFile(this, "Tank_Driving.mp3");
 
@@ -165,4 +167,6 @@ void keyReleased() {
 
 
 void gameOver() {
+  image(gameOver, width/2, height/2, width/3, height/3);
+  noLoop();
 }
