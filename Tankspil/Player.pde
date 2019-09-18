@@ -21,11 +21,23 @@ class Player {
     if (location.y - 65 < 0) location.sub(velocity);
   }
 
+  void collition() {
+    for (int i = bullets.size()-1; i >= 0; i--) {
+      if (bullets.get(i).lifespan < 96) { //der skal gå noget tid før et bullet kan ramme noget fordi det spawner fra en player
+        if (dist(bullets.get(i).location.x, bullets.get(i).location.y, location.x, location.y) < 58) {
+          bullets.remove(bullets.get(i));
+        }
+      }
+    }
+  }
+
   void display() {
     pushMatrix();
     translate(location.x, location.y);
     rotate(radians(angle));
     image(img, 0, 0, 100, 100);
+    noFill();
+    circle(0, 0, 2*65);
     popMatrix();
   }
 }

@@ -24,9 +24,9 @@ void setup() {
 void draw() {
   background(255);
 
+  //bullets
   for (int i = bullets.size()-1; i >= 0; i--) {
     bullets.get(i).move();
-    
     if (bullets.get(i).lifespan > 0) bullets.get(i).display();
     else bullets.remove(this);
   }
@@ -44,10 +44,16 @@ void draw() {
     driving.stop();
     played = false;
   }
+  
+  
+  p1.collition();
+  p2.collition();
+  
 
   p1.display();
   p2.display();
 }
+
 
 void movePlayers() {
   if (p1L) p1.angle -= 4;

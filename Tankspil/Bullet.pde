@@ -31,7 +31,8 @@ class Bullet {
       location.y = 8;
     }
     
-    lifespan--;
+    lifespan--; //<>//
+    println(lifespan);
   }
   
   void display() {
