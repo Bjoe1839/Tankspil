@@ -35,6 +35,7 @@ class Bullet {
   }
   
   void display() {
+    noStroke();
     circle(location.x, location.y, 16);
   }
 }

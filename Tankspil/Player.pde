@@ -4,6 +4,8 @@ class Player {
 
   PVector location, velocity;
   int angle;
+  
+  int cooldown;
 
   Player(PVector loc, PImage image) {
     location = loc;
@@ -31,6 +33,9 @@ class Player {
         }
       }
     }
+    
+    cooldown--;
+    if (cooldown < 0) cooldown = 0;
   }
 
   void display() {
@@ -38,8 +43,12 @@ class Player {
     translate(location.x, location.y);
     rotate(radians(angle));
     image(img, 0, 0, 100, 100);
-    //noFill();
-    //circle(0, 0, 2*65);
     popMatrix();
+    
+    //cooldown bar
+    float c = map(cooldown, 0, 30, -50, 50);
+    stroke(0, 255, 0);
+    strokeWeight(5);
+    line(location.x-50, location.y-70, location.x-c, location.y-70);
   }
 }

@@ -1,9 +1,12 @@
 class Turret {
 
   PVector location, aim;
+  int shootAt;
+  
 
   Turret() {
     location = new PVector(random(width), random(height));
+    shootAt = round(random(180));
   }
 
   void shoot() {
