@@ -3,6 +3,9 @@ SoundFile driving;
 
 Player p1, p2;
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+ArrayList<Turret> turrets = new ArrayList<Turret>();
+
+PImage tImg;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
@@ -13,7 +16,6 @@ int score = 20, timer = 180, goal = 100, level = 1;
 
 PFont font; 
 
-
 void setup() {
   fullScreen();
   noCursor();
@@ -23,6 +25,7 @@ void setup() {
   fill(0);
   font = loadFont("Digitaltech-rm0K.vlw");
   textFont(font, 45);
+  tImg = loadImage("Turret.gif");
 
   driving = new SoundFile(this, "Tank_Driving.mp3");
 
@@ -37,7 +40,7 @@ void draw() {
   for (int i = bullets.size()-1; i >= 0; i--) {
     bullets.get(i).move();
     if (bullets.get(i).lifespan > 0) bullets.get(i).display();
-    else bullets.remove(this);
+    else bullets.remove(bullets.get(i));
   }
 
 
@@ -61,6 +64,14 @@ void draw() {
 
   p1.display();
   p2.display();
+  
+  if (frameCount%180 == 0) turrets.add(new Turret());
+  
+  for (int i = turrets.size()-1; i >= 0; i--) {
+    if (frameCount%180 == 60) turrets.get(i).shoot();
+    if (turrets.get(i).collision()) turrets.remove(turrets.get(i));
+    else turrets.get(i).display();
+  }
 
   if (frameCount%60 == 0) timer--;
   if (timer < 0) gameOver();
@@ -73,14 +84,14 @@ void draw() {
 }
 
 void movePlayers() {
-  if (p1L) p1.angle -= 4;
-  if (p1R) p1.angle += 4;
+  if (p1L) p1.angle -= 5;
+  if (p1R) p1.angle += 5;
   if (p1U) p1.move(1);
   if (p1D) p1.move(-1);
 
 
-  if (p2L) p2.angle -= 4;
-  if (p2R) p2.angle += 4;
+  if (p2L) p2.angle -= 5;
+  if (p2R) p2.angle += 5;
   if (p2U) p2.move(1);
   if (p2D) p2.move(-1);
 }

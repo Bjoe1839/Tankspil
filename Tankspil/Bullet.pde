@@ -32,7 +32,6 @@ class Bullet {
     }
     
     lifespan--; //<>//
-    println(lifespan);
   }
   
   void display() {
