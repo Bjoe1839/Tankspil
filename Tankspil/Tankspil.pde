@@ -9,10 +9,14 @@ boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
 
 boolean played;
 
+int score = 20, timer = 180, goal = 100, level = 1;
+
 void setup() {
   fullScreen();
   noCursor();
   imageMode(CENTER);
+  textAlign(CENTER, TOP);
+  textSize(25);
   fill(0);
 
   driving = new SoundFile(this, "Tank_Driving.mp3");
@@ -46,14 +50,22 @@ void draw() {
   }
   
   
-  p1.collition();
-  p2.collition();
+  p1.collision();
+  p2.collision();
   
 
   p1.display();
   p2.display();
+  
+  if (frameCount%60 == 0) timer--;
+  if (timer < 0) gameOver();
+  if (frameCount%120 == 0) score--;
+  if (score < 0) score = 0;
+  
+  text("Goal: "+goal+"\nScore: "+score, width/16, height/30);
+  text("Time Left: "+timer, width/2, height/30);
+  text("Level: "+level, width-width/16, height/30);
 }
-
 
 void movePlayers() {
   if (p1L) p1.angle -= 4;
@@ -106,7 +118,6 @@ void keyPressed() {
 }
 
 
-
 void keyReleased() {
   switch(keyCode) {
   case 'A':
@@ -134,4 +145,9 @@ void keyReleased() {
     p2D = false;
     break;
   }
+}
+
+
+void gameOver() {
+  
 }
