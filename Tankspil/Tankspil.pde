@@ -11,13 +11,18 @@ boolean played;
 
 int score = 20, timer = 180, goal = 100, level = 1;
 
+PFont font; 
+
+
 void setup() {
   fullScreen();
   noCursor();
   imageMode(CENTER);
   textAlign(CENTER, TOP);
-  textSize(25);
+  //textSize(25);
   fill(0);
+  font = loadFont("Digitaltech-rm0K.vlw");
+  textFont(font, 45);
 
   driving = new SoundFile(this, "Tank_Driving.mp3");
 
@@ -48,20 +53,20 @@ void draw() {
     driving.stop();
     played = false;
   }
-  
-  
+
+
   p1.collision();
   p2.collision();
-  
+
 
   p1.display();
   p2.display();
-  
+
   if (frameCount%60 == 0) timer--;
   if (timer < 0) gameOver();
   if (frameCount%120 == 0) score--;
   if (score < 0) score = 0;
-  
+
   text("Goal: "+goal+"\nScore: "+score, width/16, height/30);
   text("Time Left: "+timer, width/2, height/30);
   text("Level: "+level, width-width/16, height/30);
@@ -149,5 +154,4 @@ void keyReleased() {
 
 
 void gameOver() {
-  
 }
