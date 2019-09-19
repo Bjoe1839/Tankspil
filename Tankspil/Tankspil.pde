@@ -218,6 +218,7 @@ void keyReleased() {
 
 void gameOver() {
   image(gameOver, width/2, height/2, width/3, height/3);
+  text("Press esc to exit", width/2, height/2+height/5);
   noLoop();
 }
 
