@@ -6,7 +6,7 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Turret> turrets = new ArrayList<Turret>();
 
 PImage tImg; //turret
-PImage gameOver, levelUpImg, win;
+PImage gameOver, levelUpImg, win, background;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
@@ -30,19 +30,19 @@ void setup() {
   gameOver = loadImage("Game Over.png");
   levelUpImg = loadImage("Level Up.png");
   win = loadImage("You Win.png");
+  background = loadImage("Background.png");
 
   driving = new SoundFile(this, "Tank_Driving.wav");
   pew1 = new SoundFile(this, "Pew Pew.wav");
   pew2 = new SoundFile(this, "Pew Pew.wav");
   oof = new SoundFile(this, "deathsound.wav");
-
   p1 = new Player(new PVector(width/4, height/2), loadImage("Blåtank.png"));
   p2 = new Player(new PVector(width*3/4, height/2), loadImage("Rødtank.png"));
 }
 
 
 void draw() {
-  background(255);
+  background(background);
 
   if (levelUp) {
     image(levelUpImg, width/2, height/2);
