@@ -13,7 +13,7 @@ boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
 
 boolean drivingPlays;
 
-int score = 10, timer = 90, goal = 5, level = 1, turretsEvery = 180;
+int score = 10, timer = 90, goal = 50, level = 1, turretsEvery = 180;
 boolean levelUp;
 
 PFont font; 
@@ -125,6 +125,7 @@ void draw() {
       else {
         image(win, width/2, height/2, width/2, height/2);
         text("Press esc to exit", width/2, height/2+height/4);
+        driving.stop();
         noLoop();
       }
     }
@@ -223,6 +224,7 @@ void keyReleased() {
 void gameOver() {
   image(gameOver, width/2, height/2, width/3, height/3);
   text("Press esc to exit", width/2, height/2+height/5);
+  driving.stop();
   noLoop();
 }
 
@@ -233,7 +235,7 @@ void mousePressed() {
       turrets.remove(turrets.get(i));
     }
 
-    goal = 10;
+    goal = 100;
     timer = 90;
     score = 20;
     level = 2;
