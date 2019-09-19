@@ -5,15 +5,16 @@ Player p1, p2;
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Turret> turrets = new ArrayList<Turret>();
 
-PImage tImg;
-PImage gameOver;
+PImage tImg; //turret
+PImage gameOver, levelUpImg, win;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
 
 boolean drivingPlays;
 
-int score = 20, timer = 180, goal = 100, level = 1;
+int score = 10, timer = 90, goal = 50, level = 1, turretsEvery = 180;
+boolean levelUp;
 
 PFont font; 
 
@@ -22,12 +23,13 @@ void setup() {
   noCursor();
   imageMode(CENTER);
   textAlign(CENTER, TOP);
-  //textSize(25);
   fill(0);
   font = loadFont("Digitaltech-rm0K.vlw");
   textFont(font, 45);
   tImg = loadImage("Turret.gif");
   gameOver = loadImage("Game Over.png");
+  levelUpImg = loadImage("Level Up.png");
+  win = loadImage("You Win.png");
 
   driving = new SoundFile(this, "Tank_Driving.wav");
   pew1 = new SoundFile(this, "Pew Pew.wav");
@@ -38,54 +40,79 @@ void setup() {
   p2 = new Player(new PVector(width*3/4, height/2), loadImage("Rødtank.png"));
 }
 
+
 void draw() {
   background(255);
 
-  //bullets
-  for (int i = bullets.size()-1; i >= 0; i--) {
-    bullets.get(i).move();
-    if (bullets.get(i).lifespan > 0) bullets.get(i).display();
-    else bullets.remove(bullets.get(i));
-  }
-
-
-  movePlayers();
-
-  //spiller lyd hvis en af tankene kører frem eller tilbage 
-  if (p1U || p1D || p2U || p2D || p1R || p1L || p2R || p2L) {
-    if (!drivingPlays) {
-      driving.loop();
-      drivingPlays = true;
-    }
+  if (levelUp) {
+    image(levelUpImg, width/2, height/2);
+    text("Press mousebutton to continue", width/2, height/2+height/8);
   } else {
-    driving.stop();
-    drivingPlays = false;
+
+    //bullets
+    for (int i = bullets.size()-1; i >= 0; i--) {
+      bullets.get(i).move();
+      if (bullets.get(i).lifespan > 0) bullets.get(i).display();
+      else bullets.remove(bullets.get(i));
+    }
+
+
+    movePlayers();
+
+    //spiller lyd hvis en af tankene kører frem eller tilbage 
+    if (p1U || p1D || p2U || p2D || p1R || p1L || p2R || p2L) {
+      if (!drivingPlays) {
+        driving.loop();
+        drivingPlays = true;
+      }
+    } else {
+      driving.stop();
+      drivingPlays = false;
+    }
+
+
+    p1.collision();
+    p2.collision();
+
+
+    p1.display();
+    p2.display();
+
+    if (frameCount%turretsEvery == 0) turrets.add(new Turret());
+
+    for (int i = turrets.size()-1; i >= 0; i--) {
+      if (frameCount%180 == turrets.get(i).shootAt) turrets.get(i).shoot();
+      if (turrets.get(i).collision()) turrets.remove(turrets.get(i));
+      else turrets.get(i).display();
+    }
+
+    if (frameCount%60 == 0) timer--;
+    if (timer <= 0) gameOver();
+    if (frameCount%120 == 0) score--;
+    if (score < 0) score = 0;
+
+    text("Goal: "+goal+"\nScore: "+score, width/16, height/30);
+    text("Time Left: "+timer, width/2, height/30);
+    text("Level: "+level, width-width/16, height/30);
+
+    //score bar
+    fill(0, 255, 0);
+    noStroke();
+    float c = map(score, 0, goal, 0, 200);
+    rect(width/32, height/7, c, 20);
+    stroke(0);
+    noFill();
+    rect(width/32, height/7, 200, 20);
+    fill(0);
+    
+    if (score >= goal) {
+      if (level == 1) levelUp = true;
+      else {
+        image(win, width/2, height/2, width/2, height/2);
+        noLoop();
+      }
+    }
   }
-
-
-  p1.collision();
-  p2.collision();
-
-
-  p1.display();
-  p2.display();
-
-  if (frameCount%180 == 0) turrets.add(new Turret());
-
-  for (int i = turrets.size()-1; i >= 0; i--) {
-    if (frameCount%180 == turrets.get(i).shootAt) turrets.get(i).shoot();
-    if (turrets.get(i).collision()) turrets.remove(turrets.get(i));
-    else turrets.get(i).display();
-  }
-
-  if (frameCount%60 == 0) timer--;
-  if (timer < 0) gameOver();
-  if (frameCount%120 == 0) score--;
-  if (score < 0) score = 0;
-
-  text("Goal: "+goal+"\nScore: "+score, width/16, height/30);
-  text("Time Left: "+timer, width/2, height/30);
-  text("Level: "+level, width-width/16, height/30);
 }
 
 void movePlayers() {
@@ -180,4 +207,17 @@ void keyReleased() {
 void gameOver() {
   image(gameOver, width/2, height/2, width/3, height/3);
   noLoop();
+}
+
+
+void mousePressed() {
+  if (levelUp) {
+    goal = 100;
+    timer = 90;
+    score = 20;
+    level = 2;
+    turretsEvery = 90;
+
+    levelUp = false;
+  }
 }
