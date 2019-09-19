@@ -1,4 +1,4 @@
-import processing.sound.*;
+ import processing.sound.*;
 SoundFile driving, pew1, pew2, oof;
 
 Player p1, p2;
@@ -6,7 +6,7 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Turret> turrets = new ArrayList<Turret>();
 
 PImage tImg; //turret
-PImage gameOver, levelUpImg, win, background;
+PImage gameOver, levelUpImg, win, background, tree;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
@@ -31,6 +31,7 @@ void setup() {
   levelUpImg = loadImage("Level Up.png");
   win = loadImage("You Win.png");
   background = loadImage("Background.png");
+  tree = loadImage("Tree.png");
 
   driving = new SoundFile(this, "Tank_Driving.wav");
   pew1 = new SoundFile(this, "Pew Pew.wav");
@@ -43,6 +44,7 @@ void setup() {
 
 void draw() {
   background(background);
+  
 
   if (levelUp) {
     image(levelUpImg, width/2, height/2);
@@ -77,6 +79,11 @@ void draw() {
 
     p1.display();
     p2.display();
+    
+    image(tree,width/3*2,height/2); // Displays tree on top of tanks so tanks can move "through" tree
+    image(tree,width/3*2+100,height/2-100);
+    image(tree,width/3*2+100,height/2+100);
+    image(tree,width/3*2-75,height/2+50);
 
     if (frameCount%turretsEvery == 0) turrets.add(new Turret());
 
