@@ -5,7 +5,7 @@ class Turret {
   
 
   Turret() {
-    location = new PVector(random(width), random(height));
+    location = new PVector(random(50, width-50), random(height/6, height-50));
     shootAt = round(random(180));
   }
 

@@ -88,7 +88,7 @@ void draw() {
     if (frameCount%turretsEvery == 0) turrets.add(new Turret());
 
     for (int i = turrets.size()-1; i >= 0; i--) {
-      if (frameCount%180 == turrets.get(i).shootAt) turrets.get(i).shoot();
+      //if (frameCount%180 == turrets.get(i).shootAt) turrets.get(i).shoot();
       if (turrets.get(i).collision()) turrets.remove(turrets.get(i));
       else turrets.get(i).display();
     }
@@ -106,10 +106,10 @@ void draw() {
     fill(0, 255, 0);
     noStroke();
     float c = map(score, 0, goal, 0, 200);
-    rect(width/32, height/7, c, 20);
+    rect(width/9, height/26, c, 20);
     stroke(0);
     noFill();
-    rect(width/32, height/7, 200, 20);
+    rect(width/9, height/26, 200, 20);
     fill(0);
     
     if (score >= goal) {
@@ -219,11 +219,15 @@ void gameOver() {
 
 void mousePressed() {
   if (levelUp) {
+    for (int i = turrets.size()-1; i >= 0; i--) {
+      turrets.remove(turrets.get(i));
+    }
+    
     goal = 100;
     timer = 90;
     score = 20;
     level = 2;
-    turretsEvery = 90;
+    turretsEvery = 60;
 
     levelUp = false;
   }
