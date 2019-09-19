@@ -1,4 +1,4 @@
- import processing.sound.*;
+import processing.sound.*;
 SoundFile driving, pew1, pew2, oof;
 
 Player p1, p2;
@@ -13,7 +13,7 @@ boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
 
 boolean drivingPlays;
 
-int score = 10, timer = 90, goal = 50, level = 1, turretsEvery = 180;
+int score = 10, timer = 90, goal = 5, level = 1, turretsEvery = 180;
 boolean levelUp;
 
 PFont font; 
@@ -38,21 +38,27 @@ void setup() {
   pew1 = new SoundFile(this, "Pew Pew.wav");
   pew2 = new SoundFile(this, "Pew Pew.wav");
   oof = new SoundFile(this, "deathsound.wav");
-  p1 = new Player(new PVector(width/4, height/2), loadImage("Blåtank.png"));
-  p2 = new Player(new PVector(width*3/4, height/2), loadImage("Rødtank.png"));
+  p1 = new Player(new PVector(width/4, height/4), loadImage("Blåtank.png"));
+  p2 = new Player(new PVector(width/2, height-height/3), loadImage("Rødtank.png"));
 }
 
 
 void draw() {
   background(background);
-  
+
 
   if (levelUp) {
+    image(water, width/2, height/2);
     image(levelUpImg, width/2, height/2);
     text("Press mousebutton to continue", width/2, height/2+height/8);
   } else {
 
-
+    //bullets
+    for (int i = bullets.size()-1; i >= 0; i--) {
+      bullets.get(i).move();
+      if (bullets.get(i).lifespan > 0) bullets.get(i).display();
+      else bullets.remove(bullets.get(i));
+    }
 
     movePlayers();
 
@@ -74,22 +80,6 @@ void draw() {
 
     p1.display();
     p2.display();
-    
-    tint(255,200);
-    image(water,width/2,height/2);
-    
-    tint(255,255);
-    image(tree,width/3*2,height/2); // Displays tree on top of tanks so tanks can move "through" tree
-    image(tree,width/3*2+100,height/2-100);
-    image(tree,width/3*2+100,height/2+100);
-    image(tree,width/3*2-75,height/2+50);
-    
-      //bullets
-    for (int i = bullets.size()-1; i >= 0; i--) {
-      bullets.get(i).move();
-      if (bullets.get(i).lifespan > 0) bullets.get(i).display();
-      else bullets.remove(bullets.get(i));
-    }
 
 
     if (frameCount%turretsEvery == 0) turrets.add(new Turret());
@@ -98,12 +88,23 @@ void draw() {
       if (frameCount%180 == turrets.get(i).shootAt) turrets.get(i).shoot();
       if (turrets.get(i).collision()) turrets.remove(turrets.get(i));
       else turrets.get(i).display();
-    }
+    }    
+
+    //vandet er gennemsigtigt
+    tint(255, 200);
+    image(water, width/2, height/2);
+
+    tint(255, 255);
+    image(tree, width/3*2, height/2); // Displays tree on top of tanks so tanks can move "through" tree
+    image(tree, width/3*2+100, height/2-100);
+    image(tree, width/3*2+100, height/2+100);
+    image(tree, width/3*2-75, height/2+50);
 
     if (frameCount%60 == 0) timer--;
     if (timer <= 0) gameOver();
     if (frameCount%120 == 0) score--;
     if (score < 0) score = 0;
+
 
     text("Goal: "+goal+"\nScore: "+score, width/16, height/30);
     text("Time Left: "+timer, width/2, height/30);
@@ -118,11 +119,12 @@ void draw() {
     noFill();
     rect(width/9, height/26, 200, 20);
     fill(0);
-    
+
     if (score >= goal) {
       if (level == 1) levelUp = true;
       else {
         image(win, width/2, height/2, width/2, height/2);
+        text("Press esc to exit", width/2, height/2+height/4);
         noLoop();
       }
     }
@@ -230,8 +232,8 @@ void mousePressed() {
     for (int i = turrets.size()-1; i >= 0; i--) {
       turrets.remove(turrets.get(i));
     }
-    
-    goal = 100;
+
+    goal = 10;
     timer = 90;
     score = 20;
     level = 2;
