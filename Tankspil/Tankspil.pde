@@ -75,8 +75,10 @@ void draw() {
     p1.display();
     p2.display();
     
+    tint(255,200);
     image(water,width/2,height/2);
     
+    tint(255,255);
     image(tree,width/3*2,height/2); // Displays tree on top of tanks so tanks can move "through" tree
     image(tree,width/3*2+100,height/2-100);
     image(tree,width/3*2+100,height/2+100);
