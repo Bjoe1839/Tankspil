@@ -6,7 +6,7 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Turret> turrets = new ArrayList<Turret>();
 
 PImage tImg; //turret
-PImage gameOver, levelUpImg, win, background, tree, water;
+PImage gameOver, levelUpImg, win, background, tree, water, startScreen;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
 boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
@@ -14,7 +14,7 @@ boolean p2L, p2R, p2U, p2D; //hvis piletasterne er trykkede
 boolean drivingPlays;
 
 int score = 10, timer = 90, goal = 50, level = 1, turretsEvery = 180;
-boolean levelUp;
+boolean levelUp, start = true;
 
 PFont font; 
 
@@ -33,6 +33,7 @@ void setup() {
   background = loadImage("Background.png");
   tree = loadImage("Tree.png");
   water = loadImage("Water.png");
+  startScreen = loadImage("Startscreen.png");
 
   driving = new SoundFile(this, "Tank_Driving.wav");
   pew1 = new SoundFile(this, "Pew Pew.wav");
@@ -46,8 +47,9 @@ void setup() {
 void draw() {
   background(background);
 
-
-  if (levelUp) {
+  if (start) {
+    image(startScreen, width/2, height/2, width, height);
+  } else if (levelUp) {
     image(water, width/2, height/2);
     image(levelUpImg, width/2, height/2);
     text("Press mousebutton to continue", width/2, height/2+height/8);
@@ -76,7 +78,6 @@ void draw() {
 
     p1.collision();
     p2.collision();
-
 
     p1.display();
     p2.display();
@@ -121,8 +122,10 @@ void draw() {
     fill(0);
 
     if (score >= goal) {
-      if (level == 1) levelUp = true;
-      else {
+      if (level == 1) {
+        levelUp = true;
+        driving.stop();
+      } else {
         image(win, width/2, height/2, width/2, height/2);
         text("Press esc to exit", width/2, height/2+height/4);
         driving.stop();
@@ -147,45 +150,47 @@ void movePlayers() {
 
 
 void keyPressed() {
-  switch(keyCode) {
-  case 'A':
-    p1L = true;
-    break;
-  case 'D':
-    p1R = true;
-    break;
-  case 'W':
-    p1U = true;
-    break;
-  case 'S':
-    p1D = true;
-    break;
-  case LEFT:
-    p2L = true;
-    break;
-  case RIGHT:
-    p2R = true;
-    break;
-  case UP:
-    p2U = true;
-    break;
-  case DOWN:
-    p2D = true;
-    break;
-
-  case ' ':
-    if (p1.cooldown == 0) {
-      bullets.add(new Bullet(p1.location, p1.angle, 20, 100));
-      pew1.play();
-      p1.cooldown = 30;
-    }
-    break;
-  case ENTER:
-    if (p2.cooldown == 0) {
-      bullets.add(new Bullet(p2.location, p2.angle, 20, 100));
-      pew2.play();
-      p2.cooldown = 30;
+  if (!levelUp) {
+    switch(keyCode) {
+    case 'A':
+      p1L = true;
       break;
+    case 'D':
+      p1R = true;
+      break;
+    case 'W':
+      p1U = true;
+      break;
+    case 'S':
+      p1D = true;
+      break;
+    case LEFT:
+      p2L = true;
+      break;
+    case RIGHT:
+      p2R = true;
+      break;
+    case UP:
+      p2U = true;
+      break;
+    case DOWN:
+      p2D = true;
+      break;
+
+    case ' ':
+      if (p1.cooldown == 0) {
+        bullets.add(new Bullet(p1.location, p1.angle, 20, 100));
+        pew1.play();
+        p1.cooldown = 30;
+      }
+      break;
+    case ENTER:
+      if (p2.cooldown == 0) {
+        bullets.add(new Bullet(p2.location, p2.angle, 20, 100));
+        pew2.play();
+        p2.cooldown = 30;
+        break;
+      }
     }
   }
 }
@@ -230,6 +235,9 @@ void gameOver() {
 
 
 void mousePressed() {
+  if (start) {
+    start = false;
+  }
   if (levelUp) {
     for (int i = turrets.size()-1; i >= 0; i--) {
       turrets.remove(turrets.get(i));

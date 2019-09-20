@@ -26,7 +26,7 @@ class Player {
   void collision() {
     for (int i = bullets.size()-1; i >= 0; i--) {
       if (bullets.get(i).lifespan < 95) { //der skal gå noget tid før et bullet kan ramme noget fordi det spawner fra en player
-        if (dist(bullets.get(i).location.x, bullets.get(i).location.y, location.x, location.y) < 58) {
+        if (dist(bullets.get(i).location.x, bullets.get(i).location.y, location.x, location.y) < 73) {
           bullets.remove(bullets.get(i));
           score -= 3;
           oof.play();
