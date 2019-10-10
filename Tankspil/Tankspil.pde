@@ -25,7 +25,7 @@ void setup() {
   textAlign(CENTER, TOP);
   fill(0);
   font = loadFont("Digitaltech-rm0K.vlw");
-  textFont(font, 45);
+  textFont(font, 50);
   tImg = loadImage("Turret.gif");
   gameOver = loadImage("Game Over.png");
   levelUpImg = loadImage("Level Up.png");
@@ -106,19 +106,25 @@ void draw() {
     if (frameCount%120 == 0) score--;
     if (score < 0) score = 0;
 
-
-    text("Goal: "+goal+"\nScore: "+score, width/16, height/30);
+    //background in top
+    fill(0);
+    noStroke();
+    rect(0, 0, width, height/10);
+    
+    fill(255);
+    
+    text("Score: "+score+"/"+goal, width/16, height/30);
     text("Time Left: "+timer, width/2, height/30);
     text("Level: "+level, width-width/16, height/30);
 
     //score bar
     fill(0, 255, 0);
-    noStroke();
     float c = map(score, 0, goal, 0, 200);
-    rect(width/9, height/26, c, 20);
-    stroke(0);
+    rect(width/8, height/27, c, 30);
+    stroke(255);
+    strokeWeight(1);
     noFill();
-    rect(width/9, height/26, 200, 20);
+    rect(width/8, height/27, 200, 30);
     fill(0);
 
     if (score >= goal) {
@@ -136,14 +142,14 @@ void draw() {
 }
 
 void movePlayers() {
-  if (p1L) p1.angle -= 5;
-  if (p1R) p1.angle += 5;
+  if (p1L) p1.angle -= 4;
+  if (p1R) p1.angle += 4;
   if (p1U) p1.move(1);
   if (p1D) p1.move(-1);
 
 
-  if (p2L) p2.angle -= 5;
-  if (p2R) p2.angle += 5;
+  if (p2L) p2.angle -= 4;
+  if (p2R) p2.angle += 4;
   if (p2U) p2.move(1);
   if (p2D) p2.move(-1);
 }
@@ -179,14 +185,14 @@ void keyPressed() {
 
     case ' ':
       if (p1.cooldown == 0) {
-        bullets.add(new Bullet(p1.location, p1.angle, 20, 100));
+        bullets.add(new Bullet(p1.location, p1.angle, 20, color(0, 0, 200)));
         pew1.play();
         p1.cooldown = 30;
       }
       break;
     case ENTER:
       if (p2.cooldown == 0) {
-        bullets.add(new Bullet(p2.location, p2.angle, 20, 100));
+        bullets.add(new Bullet(p2.location, p2.angle, 20, color(200, 0, 0)));
         pew2.play();
         p2.cooldown = 30;
         break;

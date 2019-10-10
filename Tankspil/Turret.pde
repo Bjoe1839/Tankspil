@@ -5,7 +5,7 @@ class Turret {
   
 
   Turret() {
-    location = new PVector(random(50, width-50), random(height/6, height-50));
+    location = new PVector(random(50, width-50), random(height/10+50, height-50));
     shootAt = round(random(180));
   }
 
@@ -17,12 +17,12 @@ class Turret {
 
     aim = PVector.sub(t, location);
     
-    bullets.add(new Bullet(location, round(degrees(aim.heading()))-90, 10, 100));
+    bullets.add(new Bullet(location, round(degrees(aim.heading()))-90, 9, color(0)));
   }
 
   boolean collision() {
     for (int i = bullets.size()-1; i >= 0; i--) {
-      if (bullets.get(i).lifespan < 95) {
+      if (bullets.get(i).lifespan < 94) {
         if (dist(bullets.get(i).location.x, bullets.get(i).location.y, location.x, location.y) < 58) {
           bullets.remove(bullets.get(i));
           score += 5;

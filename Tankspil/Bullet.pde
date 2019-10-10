@@ -2,13 +2,17 @@ class Bullet {
   
   PVector location, velocity;
   int lifespan;
+  color c;
   
-  Bullet(PVector loc, int angle, int speed, int ls) {
+  Bullet(PVector loc, int angle, int speed, color col) {
+
     location = loc.copy();
     velocity = new PVector(cos(radians(angle+90)),sin(radians(angle+90)));
     velocity.mult(speed);
     
-    lifespan = ls;
+    lifespan = 100;
+    
+    c = col;
   }
   
   void move() {
@@ -26,9 +30,9 @@ class Bullet {
       velocity.y = -velocity.y;
       location.y = height-8;
     }
-    if (location.y -8 <= 0) {
+    if (location.y -8 <= height/10) {
       velocity.y = -velocity.y;
-      location.y = 8;
+      location.y = height/10+8;
     }
     
     lifespan--; //<>//
@@ -36,6 +40,7 @@ class Bullet {
   
   void display() {
     noStroke();
+    fill(c);
     circle(location.x, location.y, 16);
   }
 }
