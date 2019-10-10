@@ -4,8 +4,9 @@ SoundFile driving, pew1, pew2, oof;
 Player p1, p2;
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Turret> turrets = new ArrayList<Turret>();
+ArrayList<Crater> craters = new ArrayList<Crater>();
 
-PImage tImg; //turret
+PImage tImg, cImg; //turret og crater billede
 PImage gameOver, levelUpImg, win, background, tree, water, startScreen;
 
 boolean p1L, p1R, p1U, p1D; //hvis wasd er trykkede
@@ -16,7 +17,7 @@ boolean drivingPlays;
 int score = 10, timer = 90, goal = 50, level = 1, turretsEvery = 180;
 boolean levelUp, start = true;
 
-PFont font; 
+PFont font;
 
 void setup() {
   fullScreen();
@@ -27,6 +28,7 @@ void setup() {
   font = loadFont("Digitaltech-rm0K.vlw");
   textFont(font, 50);
   tImg = loadImage("Turret.gif");
+  cImg = loadImage("Crater.png");
   gameOver = loadImage("Game Over.png");
   levelUpImg = loadImage("Level Up.png");
   win = loadImage("You Win.png");
@@ -47,8 +49,10 @@ void setup() {
 void draw() {
   background(background);
 
+  //manual
   if (start) {
     image(startScreen, width/2, height/2, width, height);
+    //levelup
   } else if (levelUp) {
     image(water, width/2, height/2);
     image(levelUpImg, width/2, height/2);
@@ -61,6 +65,13 @@ void draw() {
       if (bullets.get(i).lifespan > 0) bullets.get(i).display();
       else bullets.remove(bullets.get(i));
     }
+    
+    //crater
+    for (int i = craters.size()-1; i >= 0; i--) {
+      craters.get(i).display();
+      craters.get(i).check();
+    }
+    
 
     movePlayers();
 
@@ -85,17 +96,18 @@ void draw() {
 
     if (frameCount%turretsEvery == 0) turrets.add(new Turret());
 
+    //turrets
     for (int i = turrets.size()-1; i >= 0; i--) {
       if (frameCount%180 == turrets.get(i).shootAt) turrets.get(i).shoot();
       if (turrets.get(i).collision()) turrets.remove(turrets.get(i));
       else turrets.get(i).display();
-    }    
+    }
 
     //vandet er gennemsigtigt
     tint(255, 200);
     image(water, width/2, height/2);
+    noTint();
 
-    tint(255, 255);
     image(tree, width/3*2, height/2); // Displays tree on top of tanks so tanks can move "through" tree
     image(tree, width/3*2+100, height/2-100);
     image(tree, width/3*2+100, height/2+100);

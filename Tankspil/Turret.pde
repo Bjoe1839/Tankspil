@@ -24,6 +24,7 @@ class Turret {
     for (int i = bullets.size()-1; i >= 0; i--) {
       if (bullets.get(i).lifespan < 94) {
         if (dist(bullets.get(i).location.x, bullets.get(i).location.y, location.x, location.y) < 58) {
+          craters.add(new Crater(bullets.get(i).location));
           bullets.remove(bullets.get(i));
           score += 5;
           return true;
