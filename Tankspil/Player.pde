@@ -30,7 +30,7 @@ class Player {
           craters.add(new Crater(bullets.get(i).location));
           bullets.remove(bullets.get(i));
           score -= 3;
-          oof.play();
+          hit.play();
         }
       }
     }

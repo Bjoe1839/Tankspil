@@ -1,5 +1,5 @@
 import processing.sound.*;
-SoundFile driving, pew1, pew2, oof;
+SoundFile driving, pew1, pew2, hit;
 
 Player p1, p2;
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -40,7 +40,7 @@ void setup() {
   driving = new SoundFile(this, "Tank_Driving.wav");
   pew1 = new SoundFile(this, "Pew Pew.wav");
   pew2 = new SoundFile(this, "Pew Pew.wav");
-  oof = new SoundFile(this, "deathsound.wav");
+  hit = new SoundFile(this, "Hitsound.wav");
   p1 = new Player(new PVector(width/4, height/4), loadImage("Blåtank.png"));
   p2 = new Player(new PVector(width/2, height-height/3), loadImage("Rødtank.png"));
 }
